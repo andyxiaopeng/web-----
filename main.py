@@ -5,7 +5,7 @@ import time
 import os
 from PIL import Image
 from pathlib import Path
-
+import random
 
 class AutoClicker:
     def __init__(self):
@@ -141,6 +141,10 @@ class AutoClicker:
                 # 查找目标位置
                 x, y, confidence = self.find_target_position(screenshot, target, threshold)
                 
+                # 添加随机时间延迟，模拟人类行为
+                delay = random.uniform(30, 60)
+                interval_p = delay + interval
+
                 if x is not None and y is not None:
                     print(f"找到目标! 位置: ({x}, {y}), 置信度: {confidence:.3f}")
                     target_found = True
@@ -152,8 +156,8 @@ class AutoClicker:
                         
                         # 点击后等待一段时间再继续
                         if loop:
-                            print(f"点击完成，等待 {interval} 秒后继续检查...")
-                            time.sleep(interval)
+                            print(f"点击完成，等待 {interval_p} 秒后继续检查...")
+                            time.sleep(interval_p)
                         else:
                             break
                     else:
@@ -161,8 +165,8 @@ class AutoClicker:
                         if not loop:
                             break
                         else:
-                            print(f"等待 {interval} 秒后继续检查...")
-                            time.sleep(interval)
+                            print(f"等待 {interval_p} 秒后继续检查...")
+                            time.sleep(interval_p)
                 else:
                     print(f"未找到目标，最高匹配度: {confidence:.3f}")
                     if not loop:
@@ -172,8 +176,8 @@ class AutoClicker:
                         print("3. 确保目标在当前屏幕可见")
                         break
                     else:
-                        print(f"等待 {interval} 秒后重新检查...")
-                        time.sleep(interval)
+                        print(f"等待 {interval_p} 秒后重新检查...")
+                        time.sleep(interval_p)
                 
         except KeyboardInterrupt:
             print("\n用户中断程序")
